@@ -1,6 +1,9 @@
 # BrailleIO_Metec_MVBD_Adapter
-An IBrailleIOAdapter implementation for the mectec braille devices, accessible through the MVBD 
+An IBrailleIOAdapter implementation for the mectec braille devices, accessible through the MVBD.
 
+The BrailleIO framework allows for building applications for planar refershable multiline braille-displays. It can be found on github on  
+
+[To the BrailleIO project on github](https://github.com/TUD-INF-IAI-MCI/BrailleIO "A 2D tactile pin-matrix device abstraction framework")
 
 
 
@@ -15,7 +18,7 @@ application executable file (*.exe).
 
 The content of the file have to look something like this:
 
-
+```xml
 <?xml version="1.0"?>
 <configuration>
   <appSettings>
@@ -24,3 +27,4 @@ The content of the file have to look something like this:
 
  </appSettings>
 </configuration>
+```
