@@ -10,11 +10,11 @@ The BrailleIO framework allows for building applications for planar refershable 
 ## Configuration
 
 You can configure the TCP/IP port of the MVBD connection by adding the configuration key
-MVBD_TCPIP_Port
-to your app.config file of the running allpication (.exe). The default value is 2018.
+**__MVBD_TCPIP_Port_**
+to your app.config file of the running application (_.exe_). The default value is 2018.
 
-If such a file does not exist, you can simply create a new file named app.config beseid your 
-application executable file (*.exe).
+If such a file does not exist, you can simply create a new file named **_app.config_** beseid your 
+application executable file (_*.exe_).
 
 The content of the file have to look something like this:
 
