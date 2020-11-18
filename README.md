@@ -5,6 +5,7 @@ The BrailleIO framework allows for building applications for planar refershable 
 
 [To the BrailleIO project on github](https://github.com/TUD-INF-IAI-MCI/BrailleIO "A 2D tactile pin-matrix device abstraction framework")
 
+The **_MVBD_**-Software and it's TCP/IP connection implementation are in copyright of the [_metec AG_ Stuttgart, Germany](https://www.metec-ag.de/ "mectec AG homepage"): [to the MVBD project page](https://download.metec-ag.de/MVBD/). It allows to access the 2D-tactile refreshable pin-matrix devices from _metec_ via an TCP / IP interface and API.
 
 
 ## Configuration
