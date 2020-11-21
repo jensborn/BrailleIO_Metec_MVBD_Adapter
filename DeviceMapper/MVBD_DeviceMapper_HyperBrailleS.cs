@@ -13,6 +13,12 @@ namespace MVBDAdapter.DeviceMapper
     {
         #region Members
 
+        //protected double maxTouchWidth = 2047.0;
+        protected double maxTouchWidth = 299.0;
+        //protected double maxTouchHeight = 2047.0;
+        protected double maxTouchHeight = 519.0;
+
+
         int _width = 0;
         /// <summary>
         /// Gets or sets the horizontal display size.
@@ -26,10 +32,10 @@ namespace MVBDAdapter.DeviceMapper
             set
             {
                 _width = value;
-                widthTouchFactor = 104 / 2047.0;  // do this with max values because MVBD can change width and height and the mapping does not work anymore.
+                widthTouchFactor = 104 / maxTouchWidth;  // do this with max values because MVBD can change width and height and the mapping does not work anymore.
             }
         }
-        double widthTouchFactor = 0.0;
+        protected double widthTouchFactor = 0.0;
 
 
         int _height = 0;
@@ -45,11 +51,11 @@ namespace MVBDAdapter.DeviceMapper
             set
             {
                 _height = value;
-                heightTouchFactor = 60 / 2047.0; // do this with max values because MVBD can change width and height and the mapping does not work anymore.
+                heightTouchFactor = 60 / maxTouchHeight; // do this with max values because MVBD can change width and height and the mapping does not work anymore.
 
             }
         }
-        double heightTouchFactor = 0.0;
+        protected double heightTouchFactor = 0.0;
 
         #endregion
 
@@ -84,7 +90,7 @@ namespace MVBDAdapter.DeviceMapper
         ///   <c>true</c> if the key could be translated; otherwise, <c>false</c>.
         /// </returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public bool ConvertToBioButton(int key,
+        public virtual bool ConvertToBioButton(int key,
             out BrailleIO_DeviceButton general,
             out BrailleIO_BrailleKeyboardButton keyboard,
             out BrailleIO_AdditionalButton[] additional,
@@ -276,7 +282,7 @@ namespace MVBDAdapter.DeviceMapper
         /// <returns>
         /// The device identifying struct
         /// </returns>
-        public BrailleIODevice BuildDevice(MVBDDeviceInfo deviceInfo)
+        public virtual BrailleIODevice BuildDevice(MVBDDeviceInfo deviceInfo)
         {
             DeviceInfo = deviceInfo;
             Device = new BrailleIODevice(deviceInfo.Width, deviceInfo.Height, "MVBD_HyperBarilleS" , true, true, 20);
@@ -295,13 +301,35 @@ namespace MVBDAdapter.DeviceMapper
         /// The Touch definition for this finger.
         /// </returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public BrailleIO.Structs.Touch ConvertFingerToTouch(MVBDFinger finger)
+        public virtual BrailleIO.Structs.Touch ConvertFingerToTouch(MVBDFinger finger)
         {
-            BrailleIO.Structs.Touch t = new BrailleIO.Structs.Touch(-1,-1,0);
-            if(finger != null){
-                t = new BrailleIO.Structs.Touch(finger.X * widthTouchFactor, (2047.0 - finger.Y) * heightTouchFactor, 1.0, 0.5, 0.5);
+            //BrailleIO.Structs.Touch t = new BrailleIO.Structs.Touch(-1,-1,0);
+            //if(finger != null){
+            //    t = new BrailleIO.Structs.Touch(finger.X * widthTouchFactor, (maxTouchHeight - finger.Y) * heightTouchFactor, 1.0, 0.5, 0.5);
+            //}
+            //return t;
+
+            if (finger.Y > maxTouchHeight)
+            {
+                maxTouchHeight = finger.Y;
+                Height = 60;
+                System.Diagnostics.Debug.WriteLine("New Touch Width Max Value: " + maxTouchHeight);
+            }
+
+            if (finger.X > maxTouchWidth)
+            {
+                maxTouchWidth = finger.X;
+                Width = 104;
+                System.Diagnostics.Debug.WriteLine("New Touch Height Max Value: " + maxTouchWidth);
+            }
+
+            BrailleIO.Structs.Touch t = new BrailleIO.Structs.Touch(-1, -1, 0);
+            if (finger != null)
+            {
+                t = new BrailleIO.Structs.Touch(finger.X * widthTouchFactor, finger.Y * heightTouchFactor, 1.0, 0.5, 0.5);
             }
             return t;
+
         }
         #endregion
     }
